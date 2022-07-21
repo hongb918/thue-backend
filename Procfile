@@ -1,0 +1,1 @@
+web: gunicorn thue_django.wsgi

@@ -12,6 +12,10 @@ psycopg2-binary = "*"
 djangorestframework = "*"
 pillow = "*"
 djangorestframework-simplejwt = "*"
+whitenoise = "*"
+dj-database-url = "*"
+gunicorn = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
