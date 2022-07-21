@@ -18,12 +18,12 @@ from django.urls import path
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html')),
-    # path('', include('thue.urls.product_urls', 'thue.urls.user_urls','thue.urls.order_urls' )),
+    # path('', TemplateView.as_view(template_name='index.html')),
+    path('', include('thue.urls.product_urls')),
     path('api/products/', include('thue.urls.product_urls')),
     path('api/users/', include('thue.urls.user_urls')),
     path('api/orders/', include('thue.urls.order_urls')),
