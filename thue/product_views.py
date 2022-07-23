@@ -26,6 +26,8 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getProducts(request):
+    query = request.query_params.get('keyword')
+    print(query, 'query')
     products = Product.objects.all()
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
@@ -44,20 +46,6 @@ def getProduct(request, pk):
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# def getProductsbyRoom(request, pk):
-#     roomIds = Product.objects.filter(room_id=pk)
-#     products = Product.objects.all()
-#     room = Room.objects.all()
-#     print(room.id)
-#     if roomIds == room:
-#         serializer = ProductSerializer(products, many=True)
-#         return Response(serializer.data)
-#     else:
-#         return Response(
-#                 {"detail": "Not authorized to view this room"},
-#                 status=status.HTTP_400_BAD_REQUEST
-#         )
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -68,7 +56,6 @@ def createProduct(request):
         user=user,
         name='Sample Name',
         price=0,
-        brand='Sample Brand',
         countInStock=0,
         category='Sample Category',
         description=''

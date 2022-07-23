@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = ["id", "_id", "username", "email", "name", "isAdmin"]
 
     def get__id(self, obj):
         return obj.id
@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_name(self, obj):
         name = obj.first_name
-        if name == '':
+        if name == "":
             name = obj.email
 
         return name
@@ -32,7 +32,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = ["id", "_id", "username", "email", "name", "isAdmin", "token"]
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -42,41 +42,44 @@ class UserSerializerWithToken(UserSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = "__all__"
 
-class RoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = '__all__'
-        
+    
 class ProductSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only=True)
-    # room = serializers.SerializerMethodField(read_only=True)
+    room = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = "__all__"
 
     def get_reviews(self, obj):
         reviews = obj.review_set.all()
         serializer = ReviewSerializer(reviews, many=True)
         return serializer.data
     
-    # def get_room(self, obj):
-    #     room = obj.name
-    #     serializer = RoomSerializer(room, many=True)
-    #     return serializer.data
+    def get_room(self, obj):
+        room = obj.review_set.all()
+        serializer = RoomSerializer(room, many=False)
+        return serializer.data
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = "__all__"
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShippingAddress
-        fields = '__all__'
+        fields = "__all__"
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = '__all__'
+        fields = "__all__"
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -86,7 +89,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = "__all__"
 
     def get_orderItems(self, obj):
         items = obj.orderitem_set.all()
@@ -95,8 +98,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_shippingAddress(self, obj):
         try:
-            address = ShippingAddressSerializer(
-                obj.shippingaddress, many=False).data
+            address = ShippingAddressSerializer(obj.shippingaddress, many=False).data
         except:
             address = False
         return address

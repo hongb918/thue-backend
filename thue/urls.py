@@ -4,7 +4,7 @@ from . import user_views
 from . import product_views
 
 urlpatterns = [
-
+    
     path('api/orders/', order_views.getOrders, name='orders'),
     path('api/orders/add/', order_views.addOrderItems, name='orders-add'),
     path('api/orders/myorders/', order_views.getMyOrders, name='myorders'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path("api/products/<str:pk>/re", product_views.createProductReview, name="create-review"),
     path("api/products/top/", product_views.getTopProducts, name="top-products"),
     path("api/products/<str:pk>/", product_views.getProduct, name="product"),
+    path('api/products/<str:pk>/reviews/', product_views.createProductReview, name="create-review"),
     path("api/products/update/<str:pk>/", product_views.updateProduct, name="product-update"),
     path("api/products/delete/<str:pk>/", product_views.deleteProduct, name="product-delete"),
     
@@ -29,4 +30,5 @@ urlpatterns = [
     path("api/users/<str:pk>/", user_views.getUserById, name="user"),
     path("api/users/update/<str:pk>/", user_views.updateUser, name="user-update"),
     path("api/users/delete/<str:pk>/", user_views.deleteUser, name="user-delete"),
+
 ]
