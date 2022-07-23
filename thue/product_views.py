@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 
-from thue.models import Product, Review
+from thue.models import Product, Review, Room
 from thue.serializers import ProductSerializer
 
 from rest_framework import status
@@ -44,6 +44,20 @@ def getProduct(request, pk):
     serializer = ProductSerializer(product, many=False)
     return Response(serializer.data)
 
+# @api_view(['GET'])
+# def getProductsbyRoom(request, pk):
+#     roomIds = Product.objects.filter(room_id=pk)
+#     products = Product.objects.all()
+#     room = Room.objects.all()
+#     print(room.id)
+#     if roomIds == room:
+#         serializer = ProductSerializer(products, many=True)
+#         return Response(serializer.data)
+#     else:
+#         return Response(
+#                 {"detail": "Not authorized to view this room"},
+#                 status=status.HTTP_400_BAD_REQUEST
+#         )
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
