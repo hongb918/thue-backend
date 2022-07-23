@@ -1,1 +1,2 @@
-web: gunicorn thue_django.wsgi
+release: python manage.py migrate
+web: gunicorn backend.wsgi --log-file -
