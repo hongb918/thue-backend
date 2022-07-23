@@ -179,6 +179,3 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-import django_heroku
-django_heroku.settings(locals())
